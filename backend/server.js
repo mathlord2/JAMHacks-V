@@ -1,9 +1,12 @@
-require('dotenv').config({ path: __dirname+'/../.env'});
+require('dotenv').config({ path: __dirname+'\\.env'});
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
+const authRoutes = require('./routes/authRoutes');
+const requireAuth = require('./middlewares/requireAuth')
 
 const mongoUri = process.env.URI;
+console.log(mongoUri)
 const port = 5000;
 
 mongoose.connect(mongoUri, {
