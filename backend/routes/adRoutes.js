@@ -11,8 +11,17 @@ router.use(requireAuth)
 
 router.get('/ads/:adType', async (req, res) => {
     try{
-        const ads = Ad.find({ type: req.type_id })
+        const ads = await Ad.find({ type: req.type_id })
         res.send(ads)
+    } catch (e){
+        res.send({error: e.message})
+    }
+})
+
+router.get('/ads/:adID', async (req, res) => {
+    try{
+        const ad = await Ad.find({ _id: req.params.adID })
+        res.send(ad)
     } catch (e){
         res.send({error: e.message})
     }
@@ -50,7 +59,7 @@ router.put('/ads/:adID', upload.single('device_img'), async (req, res) => {
         if (img){
             newbody = {...newbody, image: img}
         }
-        const ad = Ad.findByIdAndUpdate(req.params.adID, newbody)
+        const ad = await Ad.findByIdAndUpdate(req.params.adID, newbody)
         res.send(ad)
     } catch (e){
         res.send({error: e.message})
