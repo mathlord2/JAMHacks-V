@@ -1,6 +1,6 @@
 # Project Description
 
-JAMHacks V project: a platform for sharing used electronic devices.
+JAMHacks V project: a platform for sharing used electronic devices and components.
 
 ## How to run the app
 
