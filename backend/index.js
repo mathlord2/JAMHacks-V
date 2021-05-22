@@ -1,4 +1,5 @@
 require('dotenv').config({ path: __dirname+'\\.env'});
+require('./models/User')
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
