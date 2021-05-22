@@ -6,6 +6,7 @@ const adSchema = new mongoose.Schema({
     city: String,
     date: Date,
     description: String,
+    type: String,
     owner: {type:mongoose.Schema.Types.ObjectId,ref:'User'},
     image: {file: {data:Buffer,contentType:String}}
 })
