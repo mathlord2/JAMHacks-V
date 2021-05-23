@@ -1,8 +1,3 @@
-// **************************************************************************************************************//
-//IMPORTANT: Run the following line in the terminal: npm install request-promise request cheerio json2csv
-//This will allow you to import all the required packages. Once they are imported, the program is good to go!
-// **************************************************************************************************************//
-
 const request = require("request-promise");
 const cheerio = require("cheerio");
 const fs = require("fs");
@@ -95,18 +90,36 @@ const devices = ['https://www.devicespecifications.com/en/model/d98c5655'
        const response = await request({
            uri: device,
            headers:{       
-   accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-   "Accept-Encoding": "gzip, deflate, br",
-   "Accept-Language": "en-US,en;q=0.9",
-
+                accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                 "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "en-US,en;q=0.9",
            },
            gzip: true,
        });
    
-       let $ = cheerio.load(response)
-       let materials =   $("#main > div:nth-child(6) > table:nth-child(4) > tbody > tr:nth-child(7) > td:nth-child(2)").text()
-       let brand = $("#main > div:nth-child(6) > table:nth-child(2) > tbody > tr:nth-child(1) > td:nth-child(2)").text()
-       let model = $("#main > div:nth-child(6) > table:nth-child(2) > tbody > tr:nth-child(2) > td:nth-child(2)").text()
+        let $ = cheerio.load(response)
+        
+        //Loads the "Materials" data into a string, which is, in turn, split into an array. This allows a comma to be inserted between consecutive materials
+        //i.e. 'GlassAluminum' alloy becomes 'Glass, Aluminum alloy'. This insertion is done in the following section of code.
+        var inputString = $("#main > div:nth-child(6) > table:nth-child(4) > tbody > tr:nth-child(7) > td:nth-child(2)").text().split("")
+        var positions = []; //Indices of every capital letter. Since uses capital letters to distinguish between one material and the next, we can leverage the positions of the capitals for our insertion.
+        for(var i=0; i<inputString.length; i++){
+            if(inputString[i].match(/[A-Z]/) != null){
+            positions.push(i);
+            }
+        }
+
+        //The insertion step
+        var numCaps = positions.length;
+        if (numCaps>1) {
+            for(i=1; i<numCaps; i++) {
+                inputString.splice(positions[i], 0, ", "); 
+            }
+        }
+
+        let materials = inputString.join(""); //Joins the array inputString
+        let brand = $("#main > div:nth-child(6) > table:nth-child(2) > tbody > tr:nth-child(1) > td:nth-child(2)").text()
+        let model = $("#main > div:nth-child(6) > table:nth-child(2) > tbody > tr:nth-child(2) > td:nth-child(2)").text()
       
        deviceData.push( {
            materials, brand, model
