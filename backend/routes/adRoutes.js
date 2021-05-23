@@ -20,7 +20,7 @@ router.get('/ads/:adType', async (req, res) => {
     }
 })
 
-//get an individual ad, look at extra info
+//look at the additional info for a specific ad
 router.get('/ads/specific/:adID', async (req, res) => {
     try{
         const ad = await Ad.find({ _id: req.params.adID })
@@ -30,7 +30,7 @@ router.get('/ads/specific/:adID', async (req, res) => {
     }
 })
 
-//look at the users who want the device
+//look at the users who want to get the device
 router.get('/ads/:adID/buyers', async (req, res) => {
     try{
         console.log(req.params.adID)
@@ -42,7 +42,7 @@ router.get('/ads/:adID/buyers', async (req, res) => {
     }
 })
 
-//choose a user, hide the ad
+//choose a user, hide the ad after the user is chosen
 router.patch('/ads/:adID/buyers/:buyerID', async (req, res) => {
     try{
         const newbuyer = await User.findById(req.params.buyerID)
@@ -53,7 +53,7 @@ router.patch('/ads/:adID/buyers/:buyerID', async (req, res) => {
     }
 })
 
-//give a message to a seller expressing interest in device
+//buyer gives a message to a seller expressing interest in device
 router.patch('/ads/:adID/buyers', async (req, res) => {
     try{
         const {message} = req.body;
