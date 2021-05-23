@@ -17,7 +17,7 @@ const Request = props => {
             <h3>{props.name} ({props.email})</h3>
             <h4>{returnDate(props.dateRequested)}</h4>
             <h4>{props.message}</h4>
-            <Button text="Accept Request"/>
+            <Button text="Accept Request" onClick={props.confirmRequest}/>
         </div>
     );
 }

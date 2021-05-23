@@ -3,7 +3,7 @@ import React from "react";
 const Material = props => {
     const isSustainable = () => {
         const material = props.text;
-        const sustainableMaterials = ["Glass", "Aluminum Alloy", "Stainless Steel"];
+        const sustainableMaterials = ["Glass", "Aluminium Alloy", "Aluminum Alloy", "Stainless Steel"];
         
         for (let i = 0; i < sustainableMaterials.length; i++) {
             if (sustainableMaterials[i].toLowerCase().includes(material.toLowerCase())) {
