@@ -1,6 +1,6 @@
 # Project Description
 
-JAMHacks V project: DeviceXchange is a platform that allows users to exchange used electronic devices and be informed of their eco-friendliness
+JAMHacks V project: DeviceXchange is a platform that allows users to exchange used electronic devices and be informed of their eco-friendliness.
 
 ## Installing dependencies
 
