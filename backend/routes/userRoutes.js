@@ -9,6 +9,7 @@ const User = mongoose.model('User')
 const router = express()
 router.use(requireAuth)
 
+//get a single user
 router.get('/users/:userID', async (req, res) => {
     try{
         const user = User.findById(req.params.userID)
