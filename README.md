@@ -23,4 +23,4 @@ You will also see any lint errors in the console.
 
 In the terminal, run: 
 ### `npm i nstall request request-promise`
-
+This will import the necessary packages.
