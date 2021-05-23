@@ -2,6 +2,23 @@
 
 JAMHacks V project: a platform for sharing used electronic devices.
 
+## Installing dependencies
+
+First, navigate to the backend directory and run npm install:
+
+```
+cd backend
+npm install
+```
+
+Then, navigate back to the main directory, into client, and run npm install:
+
+```
+cd ../
+cd client
+npm install
+```
+
 ## How to run the app
 
 In the project directory, go to the backend folder and run:
