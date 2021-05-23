@@ -1,3 +1,8 @@
+// **************************************************************************************************************//
+//IMPORTANT: Run the following line in the terminal: npm install request-promise request cheerio json2csv
+//This will allow you to import all the required packages. Once they are imported, the program is good to go!
+// **************************************************************************************************************//
+
 const request = require("request-promise");
 const cheerio = require("cheerio");
 const fs = require("fs");
