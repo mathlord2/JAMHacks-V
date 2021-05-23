@@ -27,6 +27,25 @@ router.get('/ads/:adID', async (req, res) => {
     }
 })
 
+router.get('/ads/:adID/users', async (req, res) => {
+    try{
+        const ad = await Ad.find({ _id: req.params.adID })
+        res.send(ad.users)
+    } catch (e){
+        res.send({error: e.message})
+    }
+})
+
+router.patch('/ads/:adID/buyers', async (req, res) => {
+    try{
+        const {bid} = req.body;
+        const {_id, name} = req.user;
+        const ad = await Ad.findByIdAndUpdate(req.params.adID, {$push: {users: {name, bid, id: _id}}})
+    } catch (e) {
+        res.send({error: e.message})
+    }
+})
+
 router.post('/ads', upload.single('device_img'), async (req, res) => {
     const {title, price, city, date, description, type} = req.body;
 

@@ -8,7 +8,15 @@ const adSchema = new mongoose.Schema({
     description: String,
     type: String,
     owner: {type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    image: {file: {data:Buffer,contentType:String}}
+    image: {file: {data:Buffer,contentType:String}},
+    users: [{
+        name: String,
+        amount: Number,
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    }]
 })
 
 const Ad = mongoose.model('Ad',adSchema)
