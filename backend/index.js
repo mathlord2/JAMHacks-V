@@ -6,6 +6,7 @@ const cors = require('cors')
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const adRoutes = require('./routes/adRoutes');
+const userRoutes = require('./routes/userRoutes');
 const requireAuth = require('./middlewares/requireAuth')
 
 const mongoUri = process.env.URI;
@@ -32,6 +33,7 @@ mongoose.connection.on('connected', () => {
 
 app.use(authRoutes)
 app.use(adRoutes)
+app.use(userRoutes)
 
 app.get('/', requireAuth, (req, res) => {
     res.send(`Your email is ${req.user.email}`)
