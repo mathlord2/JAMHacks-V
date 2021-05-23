@@ -1,7 +1,7 @@
 # Project Description
 
-JAMHacks V project: a platform for sharing used electronic devices.
-
+JAMHacks V project: DeviceXchange is a platform that allows users to exchange used electronic devices and be informed of their eco-friendliness.
+[Learn more about our project on Devpost.](https://devpost.com/software/devicexchange)
 ## Installing dependencies
 
 First, navigate to the backend directory and run npm install:
@@ -39,5 +39,5 @@ You will also see any lint errors in the console.
 ## How to run the specScraper
 
 In the terminal, run: 
-### `npm install request request-promise`
+### `npm install request-promise request cheerio json2csv`
 This will import the necessary packages.

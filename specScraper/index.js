@@ -133,5 +133,5 @@ const devices = ['https://www.devicespecifications.com/en/model/d98c5655'
    fs.writeFileSync("./deviceData.csv", csv, "utf-8")
 
 }
-   
 )();
+
