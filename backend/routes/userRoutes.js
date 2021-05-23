@@ -13,7 +13,7 @@ router.use(requireAuth)
 //get a single user
 router.get('/users/:userID', async (req, res) => {
     try{
-        const user = User.findById(req.params.userID)
+        const user = await User.findById(req.params.userID)
         res.send(user)
     } catch (e) {
         res.send({error: e.message})
@@ -23,10 +23,10 @@ router.get('/users/:userID', async (req, res) => {
 //get a user's ads
 router.get('/users/:userID/ads', async (req, res) => {
     try{
-        const ads = Ad.find({owner: req.params.userID})
+        const ads = await Ad.find({owner: req.params.userID})
         res.send(ads)
     } catch(e){
-        console.log({error: e.message})
+        res.send({error: e.message})
     }
 })
 

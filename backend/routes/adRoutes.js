@@ -42,6 +42,16 @@ router.get('/ads/:adID/buyers', async (req, res) => {
     }
 })
 
+//look at all of your ads
+router.get('/ads/personal', async (req, res) => {
+    try{
+        const personal_ads = await Ad.find({owner: req.user._id})
+        res.send(personal_ads)
+    } catch (e){
+        res.send({error: e.message})
+    }
+})
+
 //choose a user, hide the ad after the user is chosen
 router.patch('/ads/:adID/buyers/:buyerID', async (req, res) => {
     try{
