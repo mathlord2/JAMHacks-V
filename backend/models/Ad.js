@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+//ad stuff
 const adSchema = new mongoose.Schema({
     title: String,
     price: Number,
@@ -22,5 +22,4 @@ const adSchema = new mongoose.Schema({
         }
     }]
 })
-
 const Ad = mongoose.model('Ad',adSchema)
