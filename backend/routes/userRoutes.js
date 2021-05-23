@@ -17,3 +17,5 @@ router.get('/users/:userID', async (req, res) => {
         res.send({error: e.message})
     }
 })
+
+module.exports=router
