@@ -42,7 +42,7 @@ router.get('/ads/:adID/buyers', async (req, res) => {
     }
 })
 
-//look at all of your ads
+//look at all of your personal ads
 router.get('/ads/personal', async (req, res) => {
     try{
         const personal_ads = await Ad.find({owner: req.user._id})
