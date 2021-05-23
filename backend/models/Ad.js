@@ -30,9 +30,5 @@ const adSchema = new mongoose.Schema({
         default: null 
     }
 })
-<<<<<<< HEAD
-const Ad = mongoose.model('Ad',adSchema)
-=======
 
 const Ad = mongoose.model('Ad', adSchema)
->>>>>>> d4465ad6abed1a93a930c3d218b7e7dd26a79067

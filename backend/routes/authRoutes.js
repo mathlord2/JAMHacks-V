@@ -6,10 +6,10 @@ const User = mongoose.model('User')
 
 const router = express.Router()
 
-
+//have a user sign up for their account
 router.post('/signup', async (req, res) => {
-    const { email, password } = req.body;
-    const user = new User({ email, password });
+    const { email, name, password } = req.body;
+    const user = new User({ email, name, password });
 
     try{
         await user.save()
@@ -24,6 +24,7 @@ router.post('/signup', async (req, res) => {
 
 });
 
+//have a user sign in to their account
 router.post('/signin', async (req, res) => {
     const { email, password } = req.body;
 
