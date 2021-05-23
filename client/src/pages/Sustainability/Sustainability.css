@@ -1,0 +1,7 @@
+.searchRow * {
+    display: inline-flex;
+}
+
+.info h1 {
+    margin-top: 40px;
+}

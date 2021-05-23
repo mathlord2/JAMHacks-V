@@ -1,0 +1,43 @@
+.imageRow {
+    display: flex;
+    align-items: center;
+    margin: 50px 0px;
+}
+
+.imageRow img {
+    margin: 0px 100px;
+}
+
+.popupImage {
+    width: 40%;
+}
+
+.text {
+    flex-direction: column;
+    text-align: left;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.request {
+    display: grid;
+    grid-template-columns: 0.5fr 0.3fr 2fr 0.3fr;
+    margin: 15px 0px;
+    align-items: center;
+    border-top: 2px solid #0a7040;
+    border-bottom: 2px solid #0a7040;
+    padding: 10px 0px;
+}
+
+.formRow {
+    text-align: left;
+    width: 100%;
+    flex-direction: column;
+    margin: 20px 0px;
+}
