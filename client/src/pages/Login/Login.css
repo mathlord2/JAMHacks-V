@@ -1,0 +1,9 @@
+#authentication {
+    text-align: center;
+}
+
+.loginRow {
+    width: 100%;
+    flex-direction: column;
+    margin: 5vh 0px;
+}

@@ -1,6 +1,6 @@
 # Project Description
 
-JAMHacks V project: a platform for sharing used electronic devices and components.
+JAMHacks V project: a platform for sharing used electronic devices.
 
 ## How to run the app
 
@@ -17,3 +17,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+
+## How to run the specScraper
+
+In the terminal, run: 
+### `npm install request request-promise`
+This will import the necessary packages.
