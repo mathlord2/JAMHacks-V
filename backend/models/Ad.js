@@ -15,12 +15,20 @@ const adSchema = new mongoose.Schema({
     image: {file: {data:Buffer,contentType:String}},
     users: [{
         name: String,
-        bid: Number,
+        message: String,
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
-    }]
+    }],
+    finalBuyer: {
+        name: String,
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        default: null 
+    }
 })
 
-const Ad = mongoose.model('Ad',adSchema)
+const Ad = mongoose.model('Ad', adSchema)

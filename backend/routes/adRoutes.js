@@ -11,7 +11,7 @@ router.use(requireAuth)
 
 router.get('/ads/:adType', async (req, res) => {
     try{
-        const ads = await Ad.find({ type: req.type_id })
+        const ads = await Ad.find({ type: req.params.adType, hidden: false })
         res.send(ads)
     } catch (e){
         res.send({error: e.message})
@@ -36,11 +36,20 @@ router.get('/ads/:adID/users', async (req, res) => {
     }
 })
 
+router.patch('/ads/:adID/buyers/:buyerID', async (req, res) => {
+    try{
+        const newbuyer = {name: req.user.name, id: req.user._id}
+        const ad = await Ad.findByIdAndUpdate(adID, {finalbuyer: newbuyer, hidden: true})
+    } catch (e){
+        console.log({error: e.message})
+    }
+})
+
 router.patch('/ads/:adID/buyers', async (req, res) => {
     try{
-        const {bid} = req.body;
+        const {message} = req.body;
         const {_id, name} = req.user;
-        const ad = await Ad.findByIdAndUpdate(req.params.adID, {$push: {users: {name, bid, id: _id}}})
+        const ad = await Ad.findByIdAndUpdate(req.params.adID, {$push: {users: {name: name, message: message, id: _id}}})
     } catch (e) {
         res.send({error: e.message})
     }
