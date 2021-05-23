@@ -15,7 +15,7 @@ const adSchema = new mongoose.Schema({
     image: {file: {data:Buffer,contentType:String}},
     users: [{
         name: String,
-        amount: Number,
+        bid: Number,
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
