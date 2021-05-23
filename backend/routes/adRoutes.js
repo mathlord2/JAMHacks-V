@@ -5,10 +5,12 @@ var multer = require('multer');
 var upload = multer({ dest: 'uploads/' })
 var fs = require('fs');
 const Ad = mongoose.model('Ad')
+const User = mongoose.model('User')
 
 const router = express()
 router.use(requireAuth)
 
+//get ads by type (ie phone, computer, etc)
 router.get('/ads/:adType', async (req, res) => {
     try{
         const ads = await Ad.find({ type: req.params.adType, hidden: false })
@@ -18,7 +20,8 @@ router.get('/ads/:adType', async (req, res) => {
     }
 })
 
-router.get('/ads/:adID', async (req, res) => {
+//get an individual ad, look at extra info
+router.get('/ads/specific/:adID', async (req, res) => {
     try{
         const ad = await Ad.find({ _id: req.params.adID })
         res.send(ad)
@@ -27,34 +30,42 @@ router.get('/ads/:adID', async (req, res) => {
     }
 })
 
-router.get('/ads/:adID/users', async (req, res) => {
+//look at the users who want the device
+router.get('/ads/:adID/buyers', async (req, res) => {
     try{
-        const ad = await Ad.find({ _id: req.params.adID })
+        console.log(req.params.adID)
+        const ad = await Ad.findById(req.params.adID)
+       
         res.send(ad.users)
     } catch (e){
         res.send({error: e.message})
     }
 })
 
+//choose a user, hide the ad
 router.patch('/ads/:adID/buyers/:buyerID', async (req, res) => {
     try{
-        const newbuyer = {name: req.user.name, id: req.user._id}
-        const ad = await Ad.findByIdAndUpdate(adID, {finalbuyer: newbuyer, hidden: true})
+        const newbuyer = await User.findById(req.params.buyerID)
+        const ad = await Ad.findByIdAndUpdate(req.params.adID, {finalBuyer: {name: newbuyer.name, id: newbuyer._id}, hidden: true})
+        res.send(ad)
     } catch (e){
         console.log({error: e.message})
     }
 })
 
+//give a message to a seller expressing interest in device
 router.patch('/ads/:adID/buyers', async (req, res) => {
     try{
         const {message} = req.body;
         const {_id, name} = req.user;
         const ad = await Ad.findByIdAndUpdate(req.params.adID, {$push: {users: {name: name, message: message, id: _id}}})
+        res.send(ad)
     } catch (e) {
         res.send({error: e.message})
     }
 })
 
+//post an ad
 router.post('/ads', upload.single('device_img'), async (req, res) => {
     const {title, price, city, date, description, type} = req.body;
 
@@ -65,8 +76,8 @@ router.post('/ads', upload.single('device_img'), async (req, res) => {
             img.file.data = fs.readFileSync(req.file.destination + req.file.filename);
             img.file.contentType = 'image/jpeg'
         }
-        const {_id} = req.user; 
-        const ad = Ad({title, price, city, date, description, type, owner: _id, image: img})
+        const {_id, name} = req.user; 
+        const ad = Ad({title, price, city, date, description, type, owner: {id: _id, name: name}, image: img})
         await ad.save()
         res.send(ad)
     } catch (e){
@@ -76,7 +87,7 @@ router.post('/ads', upload.single('device_img'), async (req, res) => {
 })
 
 
-
+//edit the post about the ad
 router.put('/ads/:adID', upload.single('device_img'), async (req, res) => {
     try{
         var img = null

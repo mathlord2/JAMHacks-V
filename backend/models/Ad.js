@@ -11,7 +11,12 @@ const adSchema = new mongoose.Schema({
          type: Boolean,
          default: false
     },
-    owner: {type:mongoose.Schema.Types.ObjectId,ref:'User'},
+    owner: {
+        id: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
+    name: String},
     image: {file: {data:Buffer,contentType:String}},
     users: [{
         name: String,
@@ -26,9 +31,8 @@ const adSchema = new mongoose.Schema({
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
-        },
-        default: null 
+        }
     }
 })
 
-const Ad = mongoose.model('Ad', adSchema)
+module.exports = mongoose.model('Ad', adSchema)
