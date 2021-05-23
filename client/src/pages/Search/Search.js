@@ -38,7 +38,7 @@ export default class Search extends React.Component {
         if (input === "" && category === "") {
             this.setState({filteredAds: this.props.ads});
         } else {
-            const filteredAds = this.props.ads.filter(ad => (ad.name.toLowerCase().includes(input.toLowerCase()) || ad.message.toLowerCase().includes(input.toLowerCase())) && (ad.category === category || category === ""));
+            const filteredAds = this.props.ads.filter(ad => (ad.name.toLowerCase().includes(input.toLowerCase()) || ad.description.toLowerCase().includes(input.toLowerCase())) && (ad.category === category || category === ""));
             this.setState({filteredAds});
         }
     }

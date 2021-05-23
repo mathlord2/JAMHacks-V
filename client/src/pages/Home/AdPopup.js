@@ -32,7 +32,7 @@ export default class AdPopup extends React.Component {
                 <div className="imageRow">
                     <img src={this.props.ad.image.name} alt={this.props.ad.name} className="popupImage"/>
                     <div className="text">
-                        <h3>{this.props.ad.message}</h3>
+                        <h3>{this.props.ad.description}</h3>
                         <br/>
                         <h3><b>Location:</b> {this.props.ad.location}</h3>
                         <h3><b>Date Posted:</b> {this.returnDate(this.props.ad.date)}</h3>
@@ -45,7 +45,7 @@ export default class AdPopup extends React.Component {
                 {this.state.openRequests ?
                     <div>
                         <h2>Requests:</h2>
-                        {this.props.ad.requests.map(request => <Request {...request}/>)}
+                        {this.props.ad.requests.map(request => <Request {...request} confirmRequest={this.props.closeAd}/>)}
                     </div>
                 : <Button text="View Requests" onClick={() => {
                     this.setState({openRequests: true});

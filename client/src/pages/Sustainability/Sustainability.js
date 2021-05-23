@@ -4,18 +4,47 @@ import Button from "../../components/Button";
 import Searchbox from "../../components/Searchbox";
 import Material from "../../components/Material";
 
+import Devices from "./Devices.json";
+
 import "./Sustainability.css";
 
 export default class Sustainability extends React.Component {
     state = {
         input: "",
-        materials: ["Gold", "Aluminum", "Glass"],
+        materials: [],
         sustainable: true,
         searched: false
     }
 
     search = () => {
-        this.isSustainable();
+        let found = false;
+        let materials;
+
+        for (var i = 0; i < Devices.length; i++) {
+            if (Devices[i].model.toLowerCase().includes(this.state.input.toLowerCase())) {
+                materials = Devices[i].materials.split(", ");
+                console.log(materials);
+
+                if (materials[0] !== "") {
+                    this.setState({materials});
+                } else {
+                    this.setState({materials: []});
+                }
+                
+                found = true;
+            }
+
+            if (found) {
+                break;
+            }
+        }
+            
+
+        if (found) {
+            this.isSustainable(materials);
+        } else {
+            this.setState({materials: []});
+        }
 
         this.setState({
             searched: true
@@ -35,20 +64,20 @@ export default class Sustainability extends React.Component {
         this.setState({input: e.target.value});
     }
 
-    isSustainable = () => {
+    isSustainable = materials => {
         let counter = 0;
-        const sustainableMaterials = ["Glass", "Aluminum Alloy", "Stainless Steel"];
+        const sustainableMaterials = ["Glass", "Aluminium Alloy", "Aluminum Alloy", "Stainless Steel"];
         
-        for (let i = 0; i < this.state.materials.length; i++) {
+        for (let i = 0; i < materials.length; i++) {
             for (let j = 0; j < sustainableMaterials.length; j++) {
-                if (sustainableMaterials[j].toLowerCase().includes(this.state.materials[i].toLowerCase())) {
+                if (sustainableMaterials[j].toLowerCase().includes(materials[i].toLowerCase())) {
                     counter++;
                     break;
                 }
             }
         }
         
-        if (counter/this.state.materials.length >= 0.5) {
+        if (counter/materials.length >= 0.5) {
             this.setState({sustainable: true});
         } else {
             this.setState({sustainable: false});
@@ -74,10 +103,10 @@ export default class Sustainability extends React.Component {
                 : <div className="info">
                     <h1><b>Device:</b> {this.state.input}</h1>
                     <h1>Materials:</h1>
-                    {this.state.materials.map(m => <Material text={m} key={m} width="10%"/>)}
-                    <h1 style={{
+                    {this.state.materials.length > 0 ? this.state.materials.map(m => <Material text={m} key={m} width="10%"/>) : <h2>No sustainability information available :(</h2>}
+                    {this.state.materials.length > 0 && <h1 style={{
                         color: this.state.sustainable ? "#0a7040" : "red"
-                    }}>{this.state.sustainable ? "Sustainable" : "Not Sustainable"}</h1>
+                    }}>{this.state.sustainable ? "Sustainable" : "Not Sustainable"}</h1>}
                 </div>}
             </div>
         );
