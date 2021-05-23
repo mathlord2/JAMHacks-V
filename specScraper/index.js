@@ -1,3 +1,6 @@
+//IMPORTANT: Run the following command in the terminal: npm i nstall request request-promise
+//Now you have all the necessary packages
+
 const request = require('request-promise');
 const cheerio = require('cheerio');
 
