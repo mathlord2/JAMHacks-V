@@ -1,7 +1,7 @@
 # Project Description
 
 JAMHacks V project: DeviceXchange is a platform that allows users to exchange used electronic devices and be informed of their eco-friendliness.
-
+[Learn more about our project on Devpost.](https://devpost.com/software/devicexchange)
 ## Installing dependencies
 
 First, navigate to the backend directory and run npm install:
