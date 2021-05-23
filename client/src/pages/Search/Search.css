@@ -1,0 +1,34 @@
+.row {
+    margin-top: 3vh;
+}
+
+.row * {
+    display: inline-flex;
+}
+
+.imageRow {
+    display: flex;
+    align-items: center;
+    margin: 50px 0px;
+}
+
+.imageRow img {
+    margin: 0px 100px;
+}
+
+.popupImage {
+    width: 40%;
+}
+
+.text {
+    flex-direction: column;
+    text-align: left;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 30px;
+}
