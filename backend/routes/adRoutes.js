@@ -66,6 +66,8 @@ router.post('/ads', upload.single('device_img'), async (req, res) => {
 
 })
 
+
+
 router.put('/ads/:adID', upload.single('device_img'), async (req, res) => {
     try{
         var img = null

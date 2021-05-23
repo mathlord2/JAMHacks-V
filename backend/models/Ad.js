@@ -7,6 +7,10 @@ const adSchema = new mongoose.Schema({
     date: Date,
     description: String,
     type: String,
+    hidden:{
+         type: Boolean,
+         default: false
+    },
     owner: {type:mongoose.Schema.Types.ObjectId,ref:'User'},
     image: {file: {data:Buffer,contentType:String}},
     users: [{
