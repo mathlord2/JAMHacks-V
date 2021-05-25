@@ -43,9 +43,10 @@ router.get('/ads/:adID/buyers', async (req, res) => {
 })
 
 //look at all of your personal ads
-router.get('/ads/personal', async (req, res) => {
+router.get('/ads/', async (req, res) => {
     try{
         const personal_ads = await Ad.find({owner: req.user._id})
+        console.log(personal_ads)
         res.send(personal_ads)
     } catch (e){
         res.send({error: e.message})
@@ -87,7 +88,7 @@ router.post('/ads', upload.single('device_img'), async (req, res) => {
             img.file.contentType = 'image/jpeg'
         }
         const {_id, name} = req.user; 
-        const ad = Ad({title, price, city, date, description, type, owner: {id: _id, name: name}, image: img})
+        const ad = Ad({title, price, city, date, description, type, owner: _id, image: img})
         await ad.save()
         res.send(ad)
     } catch (e){

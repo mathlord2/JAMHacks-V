@@ -39,6 +39,10 @@ app.get('/', requireAuth, (req, res) => {
     res.send(`Your email is ${req.user.email}`)
 });
 
+app.post('/sustainabilityInfo', requireAuth, (req, res) => {
+    
+})
+
 app.listen(5000, () => {
     console.log(`listening on http://localhost:${port}`)
 })
