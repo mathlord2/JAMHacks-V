@@ -9,7 +9,7 @@ const Upload = props => {
             <label for="button" style={{
                 padding: "10px",
                 paddingLeft: "35px",
-                border: "3px solid #0D3A62",
+                border: "3px solid #0a7040",
                 borderRadius: "15px",
                 textAlign: "left",
                 width: props.width,

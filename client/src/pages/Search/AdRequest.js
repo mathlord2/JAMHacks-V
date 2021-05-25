@@ -35,7 +35,7 @@ export default class AdRequest extends React.Component {
                 <div className="imageRow">
                     <img src={this.props.ad.image.name} alt={this.props.ad.name} className="popupImage"/>
                     <div className="text">
-                        <h3>{this.props.ad.message}</h3>
+                        <h3>{this.props.ad.description}</h3>
                         <br/>
                         <h3><b>Name of Vendor:</b> {this.props.ad.vendor}</h3>
                         <h3><b>Vendor Email:</b> {this.props.ad.email}</h3>
@@ -49,7 +49,7 @@ export default class AdRequest extends React.Component {
                 
                 <Textarea placeholder="Request message" value={this.state.message}
                     onChange={this.onChange} width="100%" height={100}/>
-                <Button text="Request" margin="20px 0px" disabled={this.state.message === ""}/>
+                <Button text="Request" margin="20px 0px" disabled={this.state.message === ""} onClick={this.props.closeAd}/>
             </WhiteContainer>
         );
     }

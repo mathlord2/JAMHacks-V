@@ -78,8 +78,10 @@ router.patch('/ads/:adID/buyers', async (req, res) => {
 
 //post an ad
 router.post('/ads', upload.single('device_img'), async (req, res) => {
-    const {title, price, city, date, description, type} = req.body;
-
+    const {name, price, location, date, description, category} = req.body;
+    var title = name;
+    var city = location;
+    var type = category;
     try{
         var img = null
         if (req.file){

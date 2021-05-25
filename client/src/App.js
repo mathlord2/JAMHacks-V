@@ -15,14 +15,13 @@ import Profile from "./pages/Profile/Profile";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 
+import axios from "axios";
+
 import moment from "moment";
 
 function App() {
-  const [user, setUser] = useState({
-    name: "Eric Xiao",
-    email: "erixrekt69@gmail.com",
-    sustainabilityScore: "High"
-  });
+  const [user, setUser] = useState(null);
+
   const [myAds, setMyAds] = useState([
     {
       name: "Samsung Galaxy S7",
@@ -45,10 +44,35 @@ function App() {
               message: "I cannot afford a modern phone at the moment, so I really would love to have this."
           },
       ],
-      message: "I don't need this anymore, free for grabs!",
+      description: "I don't need this anymore, free for grabs!",
       location: "500 Laurelwood Drive",
       date: moment("2021-05-22").toDate()
-    }
+    },
+    {
+      name: "OttLite Lamp",
+      image: {
+        name: "https://i.ebayimg.com/images/g/nVkAAOSw2eNezswi/s-l400.jpg"
+      },
+      category: "Furniture",
+      materials: ["Plastic"],
+      requests: [
+          {
+              name: "Kevin Gao",
+              email: "kevinboxugao@gmail.com",
+              dateRequested: moment("2021-05-22").toDate(),
+              message: "I am in desperate need of this phone plz hand it over :)"
+          },
+          {
+              name: "Jonathan Ge",
+              email: "jonathange@gmail.com",
+              dateRequested: moment("2021-05-21").toDate(),
+              message: "I cannot afford a modern phone at the moment, so I really would love to have this."
+          },
+      ],
+      description: "I don't need this anymore, free for grabs!",
+      location: "500 Columbia Street",
+      date: moment("2021-05-20").toDate()
+    },
   ]);
 
   const [ads, setAds] = useState([
@@ -73,7 +97,7 @@ function App() {
               message: "I cannot afford a modern phone at the moment, so I really would love to have this."
           },
         ],
-        message: "I don't need this anymore, free for grabs!",
+        description: "I don't need this anymore, free for grabs!",
         location: "500 Laurelwood Drive",
         date: moment("2021-05-22").toDate(),
         vendor: "Eric Xiao",
@@ -102,7 +126,7 @@ function App() {
               message: "I cannot afford a modern phone at the moment, so I really would love to have this."
           },
         ],
-        message: "Free iPhone 4s for anyone!",
+        description: "Free iPhone 4s for anyone!",
         location: "500 Laurelwood Drive",
         date: moment("2021-05-22").toDate(),
         vendor: "Jonathan Ge",
@@ -131,7 +155,7 @@ function App() {
               message: "I cannot afford a modern phone at the moment, so I really would love to have this."
           },
         ],
-        message: "Got a used Lenovo Thinkpad that still works pretty well! Up for grabs :)",
+        description: "Got a used Lenovo Thinkpad that still works pretty well! Up for grabs :)",
         location: "500 Laurelwood Drive",
         date: moment("2021-05-22").toDate(),
         vendor: "Jonathan Ge",
@@ -142,26 +166,58 @@ function App() {
   ]);
 
   const addAd = (name, image, description, category, location, date) => {
-    setMyAds([...myAds, {
-      name,
-      image,
-      message: description,
-      category,
-      location,
-      date
-    }]);
+    const ad = {name, image, description, category, location, date};
+    setMyAds([...myAds, ad]);
+
+    /*const config = {
+      headers: {
+        "authorization": "Bearer " + user.token,
+        "accept": "application/json",
+        "Accept-Language": "en-US,en;q=0.8",
+        "Content-Type": `multipart/form-data; boundary=${form._boundary}`
+      }
+    }
+
+    axios.post("http://localhost:5000/ads", ad, config)
+    .then(response => {
+      console.log(response.data);
+    });*/
   }
 
   const logout = () => {
     setUser(null);
   }
 
-  const login = () => {
+  const login = (email, password) => {
+      const userDict = {name: "Eric Xiao", email, password};
+      let token = "";
 
+      axios.post("http://localhost:5000/signin", userDict)
+      .then(response => {
+        console.log(response);
+        token = response.data.token;
+        setUser({...userDict, token});
+
+        /*const config = {
+          headers: {
+            authorization: "Bearer " + token
+          }
+        }
+  
+        axios.get("http://localhost:5000/ads", config)
+        .then(r => {
+          console.log(r);
+          setMyAds(r.data);
+        });*/
+      });
   }
 
-  const signup = () => {
-
+  const signup = (name, email, password) => {
+    const userDict = {name, email, password};
+    axios.post("http://localhost:5000/signup", userDict)
+    .then(response => {
+      setUser({...userDict, token: response.data.token});
+    });
   }
 
   return (
@@ -178,7 +234,7 @@ function App() {
         
       <Switch>
         <Route exact path="/search">
-          <Search ads={ads}/>
+          <Search ads={ads} token={user.token}/>
         </Route>
         <Route exact path="/sustainability">
           <Sustainability/>
@@ -187,7 +243,7 @@ function App() {
           <Profile user={user} logout={logout}/>
         </Route>
         <Route exact path="/">
-          <Home ads={myAds} addAd={addAd}/>
+          <Home ads={myAds} addAd={addAd} token={user.token}/>
         </Route>
       </Switch>
       </> : <Switch>

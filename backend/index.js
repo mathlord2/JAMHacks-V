@@ -3,7 +3,9 @@ require('./models/Ad')
 require('./models/User')
 const express = require('express');
 const cors = require('cors')
+const fs = require('fs');
 const mongoose = require('mongoose');
+var bodyParser = require('body-parser')
 const authRoutes = require('./routes/authRoutes');
 const adRoutes = require('./routes/adRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -38,10 +40,6 @@ app.use(userRoutes)
 app.get('/', requireAuth, (req, res) => {
     res.send(`Your email is ${req.user.email}`)
 });
-
-app.post('/sustainabilityInfo', requireAuth, (req, res) => {
-    
-})
 
 app.listen(5000, () => {
     console.log(`listening on http://localhost:${port}`)

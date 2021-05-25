@@ -63,9 +63,15 @@ export default class Login extends React.Component {
                     <Textbox placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.changeComfirmPassword} type="password"/>
                 </div>}
             
+                <Button onClick={() => {
+                    if (this.state.login) {
+                        return this.props.login(this.state.email, this.state.password);
+                    }
+
+                    return this.props.signup(this.state.name, this.state.email, this.state.password);
+                }} text={this.state.login ? "Login" : "Signup"}/>
+
                 <h3 style={{cursor: "pointer"}} onClick={this.toggleLogin}>{this.state.login ? "New user?" : "Already have an account?"}</h3>
-            
-                <Button onClick={this.state.login ? this.props.login : this.props.signup} text={this.state.login ? "Login" : "Signup"}/>
             </div>
         );
     }
