@@ -106,6 +106,7 @@ router.post('/ads/', upload.single('image'), async (req, res) => {
             img = {file: {}}
             img.file.data = fs.readFileSync('C:/Users/tejas/JAMHacks-V/backend/uploads/'+req.file.filename)
             img.file.contentType = req.file.mimetype
+            fs.unlinkSync('C:/Users/tejas/JAMHacks-V/backend/uploads/'+req.file.filename)
         }
         const {_id} = req.user; 
         const ad = new Ad({name, price, location, date, description, category, owner: _id, image: img})
