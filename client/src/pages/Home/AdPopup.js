@@ -31,7 +31,7 @@ export default class AdPopup extends React.Component {
                 <h1>{this.props.ad.name}</h1>
     
                 <div className="imageRow">
-                    <img src={this.props.ad.image.name} alt={this.props.ad.name} className="popupImage"/>
+                    <img src={'data:'+this.props.ad.image.file.contentType+';base64,' + Buffer.from(this.props.ad.image.file.data).toString('base64')} alt={this.props.ad.name} className="popupImage"/>
                     <div className="text">
                         <h3>{this.props.ad.description}</h3>
                         <br/>
@@ -39,7 +39,7 @@ export default class AdPopup extends React.Component {
                         <h3><b>Date Posted:</b> {this.returnDate(this.props.ad.date)}</h3>
                         <h3><b>Category:</b> {this.props.ad.category}</h3>
                         <h3><b>Materials:</b></h3>
-                        {this.props.ad.materials.map(m => <Material text={m} key={m}/>)}
+                        {this.props.ad.materials && this.props.ad.materials.map(m => <Material text={m} key={m}/>)}
                     </div>
                 </div>
     

@@ -6,7 +6,7 @@ const Ad = props => {
     const source = 'data:'+props.image.file.contentType+';base64,' + buf.toString('base64');
     return (
         <WhiteContainer onClick={props.onClick}>
-            <h2>{props.title}</h2>
+            <h2>{props.name}</h2>
             <img src={source} alt={props.name} style={{width: "80%"}}/>
         </WhiteContainer>
     )
