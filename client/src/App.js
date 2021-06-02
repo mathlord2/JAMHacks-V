@@ -18,61 +18,62 @@ import Login from "./pages/Login/Login";
 import axios from "axios";
 
 import moment from "moment";
+import { BiImageAlt } from "react-icons/bi";
 
 function App() {
   const [user, setUser] = useState(null);
 
   const [myAds, setMyAds] = useState([
-    {
-      name: "Samsung Galaxy S7",
-      image: {
-        name: "https://cdn.pocket-lint.com/r/s/1200x/assets/images/136767-phones-review-samsung-galaxy-s7-edge-review-image1-hl9cn7gsdo.jpg"
-      },
-      category: "Phone",
-      materials: ["Glass", "Aluminum", "Plastic"],
-      requests: [
-          {
-              name: "Barry Zhang",
-              email: "bzbarry@gmail.com",
-              dateRequested: moment("2021-05-22").toDate(),
-              message: "I am in desperate need of this phone plz hand it over :)"
-          },
-          {
-              name: "Tejas Srikanth",
-              email: "tejassrikanth@gmail.com",
-              dateRequested: moment("2021-05-22").toDate(),
-              message: "I cannot afford a modern phone at the moment, so I really would love to have this."
-          },
-      ],
-      description: "I don't need this anymore, free for grabs!",
-      location: "500 Laurelwood Drive",
-      date: moment("2021-05-22").toDate()
-    },
-    {
-      name: "OttLite Lamp",
-      image: {
-        name: "https://i.ebayimg.com/images/g/nVkAAOSw2eNezswi/s-l400.jpg"
-      },
-      category: "Furniture",
-      materials: ["Plastic"],
-      requests: [
-          {
-              name: "Kevin Gao",
-              email: "kevinboxugao@gmail.com",
-              dateRequested: moment("2021-05-22").toDate(),
-              message: "I am in desperate need of this phone plz hand it over :)"
-          },
-          {
-              name: "Jonathan Ge",
-              email: "jonathange@gmail.com",
-              dateRequested: moment("2021-05-21").toDate(),
-              message: "I cannot afford a modern phone at the moment, so I really would love to have this."
-          },
-      ],
-      description: "I don't need this anymore, free for grabs!",
-      location: "500 Columbia Street",
-      date: moment("2021-05-20").toDate()
-    },
+    // {
+    //   name: "Samsung Galaxy S7",
+    //   image: {
+    //     name: "https://cdn.pocket-lint.com/r/s/1200x/assets/images/136767-phones-review-samsung-galaxy-s7-edge-review-image1-hl9cn7gsdo.jpg"
+    //   },
+    //   category: "Phone",
+    //   materials: ["Glass", "Aluminum", "Plastic"],
+    //   requests: [
+    //       {
+    //           name: "Barry Zhang",
+    //           email: "bzbarry@gmail.com",
+    //           dateRequested: moment("2021-05-22").toDate(),
+    //           message: "I am in desperate need of this phone plz hand it over :)"
+    //       },
+    //       {
+    //           name: "Tejas Srikanth",
+    //           email: "tejassrikanth@gmail.com",
+    //           dateRequested: moment("2021-05-22").toDate(),
+    //           message: "I cannot afford a modern phone at the moment, so I really would love to have this."
+    //       },
+    //   ],
+    //   description: "I don't need this anymore, free for grabs!",
+    //   location: "500 Laurelwood Drive",
+    //   date: moment("2021-05-22").toDate()
+    // },
+    // {
+    //   name: "OttLite Lamp",
+    //   image: {
+    //     name: "https://i.ebayimg.com/images/g/nVkAAOSw2eNezswi/s-l400.jpg"
+    //   },
+    //   category: "Furniture",
+    //   materials: ["Plastic"],
+    //   requests: [
+    //       {
+    //           name: "Kevin Gao",
+    //           email: "kevinboxugao@gmail.com",
+    //           dateRequested: moment("2021-05-22").toDate(),
+    //           message: "I am in desperate need of this phone plz hand it over :)"
+    //       },
+    //       {
+    //           name: "Jonathan Ge",
+    //           email: "jonathange@gmail.com",
+    //           dateRequested: moment("2021-05-21").toDate(),
+    //           message: "I cannot afford a modern phone at the moment, so I really would love to have this."
+    //       },
+    //   ],
+    //   description: "I don't need this anymore, free for grabs!",
+    //   location: "500 Columbia Street",
+    //   date: moment("2021-05-20").toDate()
+    // },
   ]);
 
   const [ads, setAds] = useState([
@@ -166,22 +167,28 @@ function App() {
   ]);
 
   const addAd = (name, image, description, category, location, date) => {
-    const ad = {name, image, description, category, location, date};
-    setMyAds([...myAds, ad]);
-
-    /*const config = {
+    var ad = {name, description, category, location, date};
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('image', image);
+    formData.append('description', description);
+    formData.append('category', category);
+    formData.append('location', location);
+    formData.append('date', date)
+    const config = {
       headers: {
         "authorization": "Bearer " + user.token,
-        "accept": "application/json",
-        "Accept-Language": "en-US,en;q=0.8",
-        "Content-Type": `multipart/form-data; boundary=${form._boundary}`
       }
     }
 
-    axios.post("http://localhost:5000/ads", ad, config)
+    axios({method: 'post', url: "http://localhost:5000/ads", data: formData, headers: {"authorization": "Bearer " + user.token}})
     .then(response => {
-      console.log(response.data);
-    });*/
+      ad = {...ad, image: response.data.image}
+      setMyAds([...myAds, ad]);
+    })
+    .catch(err => {
+      console.log(err);
+   });
   }
 
   const logout = () => {
@@ -194,11 +201,11 @@ function App() {
 
       axios.post("http://localhost:5000/signin", userDict)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         token = response.data.token;
         setUser({...userDict, token});
 
-        /*const config = {
+        const config = {
           headers: {
             authorization: "Bearer " + token
           }
@@ -206,9 +213,9 @@ function App() {
   
         axios.get("http://localhost:5000/ads", config)
         .then(r => {
-          console.log(r);
+          // console.log(r);
           setMyAds(r.data);
-        });*/
+        });
       });
   }
 

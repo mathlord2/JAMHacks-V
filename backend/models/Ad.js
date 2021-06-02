@@ -1,18 +1,23 @@
 const mongoose = require("mongoose");
 //ad stuff
 const adSchema = new mongoose.Schema({
-    title: String,
+    name: String,
     price: Number,
-    city: String,
+    location: String,
     date: Date,
     description: String,
-    type: String,
+    category: String,
     hidden:{
          type: Boolean,
          default: false
     },
     owner: {type:mongoose.Schema.Types.ObjectId,ref:'User'},
-    image: {file: {data:Buffer,contentType:String}},
+    image: {
+        file: {
+            data: Buffer,
+            contentType: String
+        }
+    },
     users: [{
         name: String,
         message: String,

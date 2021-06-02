@@ -65,9 +65,10 @@ export default class NewAd extends React.Component {
         this.checkDisabled();
     }
 
-    addAd = () => {
-        const image = {...this.state.image, name: URL.createObjectURL(this.state.image)};
-        this.props.addAd(this.state.name, image, this.state.description, this.state.category, this.state.location, this.state.date);
+    addAd = (e) => {
+        e.preventDefault();
+        // const image = {...this.state.image, name: URL.createObjectURL(this.state.image)};
+        this.props.addAd(this.state.name, this.state.image, this.state.description, this.state.category, this.state.location, this.state.date);
         this.props.closeAd();
     }
 
@@ -76,37 +77,38 @@ export default class NewAd extends React.Component {
             <WhiteContainer>
                 <div className="close" onClick={this.props.closeAd}><GrClose/></div>
                 <h1>Create New Ad</h1>
+                <form onSubmit={this.addAd} encType='multipart/form-data' id='form1'>
+                    <div className="formRow">
+                        <h3>Device Name</h3>
+                        <Textbox width="30%" placeholder="Name" onChange={this.changeName} value={this.state.name}/>
+                    </div>
 
-                <div className="formRow">
-                    <h3>Device Name</h3>
-                    <Textbox width="30%" placeholder="Name" onChange={this.changeName} value={this.state.name}/>
-                </div>
+                    <div className="formRow">
+                        <h3>Image of Device</h3>
+                        <Upload text="Upload image" onChange={this.changeImage} file={this.state.image} accept=".png, .jpg"/>
+                    </div>
+                    
+                    <div className="formRow">
+                        <h3>Description of Device</h3>
+                        <Textarea placeholder="Description" onChange={this.changeDescription}
+                        value={this.state.description} width="80%" height={200}/>
+                    </div>
 
-                <div className="formRow">
-                    <h3>Image of Device</h3>
-                    <Upload text="Upload image" onChange={this.changeImage} file={this.state.image} accept=".png, .jpg"/>
-                </div>
-                
-                <div className="formRow">
-                    <h3>Description of Device</h3>
-                    <Textarea placeholder="Description" onChange={this.changeDescription}
-                    value={this.state.description} width="80%" height={200}/>
-                </div>
+                    <div className="formRow">
+                        <h3>Device Category</h3>
+                        <Dropdown default="Select category" width="10%"
+                        items={["Phone", "Computer", "Tablet", "Furniture", "Other"]}
+                        value={this.state.category} setValue={this.changeCategory}/>
+                    </div>
+                    
+                    <div className="formRow">
+                        <h3>Pickup Location</h3>
+                        <Textbox width="30%" placeholder="Street address, city, province/state, postal code"
+                        onChange={this.changeLocation} value={this.state.location}/>
+                    </div>
 
-                <div className="formRow">
-                    <h3>Device Category</h3>
-                    <Dropdown default="Select category" width="10%"
-                    items={["Phone", "Computer", "Tablet", "Furniture", "Other"]}
-                    value={this.state.category} setValue={this.changeCategory}/>
-                </div>
-                
-                <div className="formRow">
-                    <h3>Pickup Location</h3>
-                    <Textbox width="30%" placeholder="Street address, city, province/state, postal code"
-                    onChange={this.changeLocation} value={this.state.location}/>
-                </div>
-
-                <Button text="Submit" disabled={this.state.disabled} onClick={this.addAd}/>
+                </form>
+                <Button text="Submit" form='form1' type='submit' disabled={this.state.disabled}/>
             </WhiteContainer>
         );
     }

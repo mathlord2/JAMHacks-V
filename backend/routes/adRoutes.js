@@ -2,13 +2,34 @@ const express = require('express')
 const mongoose = require('mongoose')
 const requireAuth = require('../middlewares/requireAuth')
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' })
+const {v4: uuidv4} = require('uuid')
+let path = require('path')
 var fs = require('fs');
 const Ad = mongoose.model('Ad')
 const User = mongoose.model('User')
 
 const router = express()
 router.use(requireAuth)
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads');
+    },
+    filename: function(req, file, cb) {   
+        cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if(allowedFileTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+let upload = multer({ storage, fileFilter })
 
 //get ads by type (ie phone, computer, etc)
 router.get('/ads/:adType', async (req, res) => {
@@ -77,20 +98,17 @@ router.patch('/ads/:adID/buyers', async (req, res) => {
 })
 
 //post an ad
-router.post('/ads', upload.single('device_img'), async (req, res) => {
-    const {name, price, location, date, description, category} = req.body;
-    var title = name;
-    var city = location;
-    var type = category;
+router.post('/ads/', upload.single('image'), async (req, res) => {
     try{
+        const {name, price, location, date, description, category} = req.body;
         var img = null
         if (req.file){
             img = {file: {}}
-            img.file.data = fs.readFileSync(req.file.destination + req.file.filename);
-            img.file.contentType = 'image/jpeg'
+            img.file.data = fs.readFileSync('C:/Users/tejas/JAMHacks-V/backend/uploads/'+req.file.filename)
+            img.file.contentType = req.file.mimetype
         }
-        const {_id, name} = req.user; 
-        const ad = Ad({title, price, city, date, description, type, owner: _id, image: img})
+        const {_id} = req.user; 
+        const ad = new Ad({name, price, location, date, description, category, owner: _id, image: img})
         await ad.save()
         res.send(ad)
     } catch (e){

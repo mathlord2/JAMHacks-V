@@ -2,7 +2,7 @@ import React from "react";
 
 const Button = props => {
     return (
-        <button onClick={props.onClick} style={{
+        <button onClick={props.onClick ? props.onClick: null} style={{
             borderRadius: "20px",
             backgroundColor: props.background ? props.background : "#0a7040",
             boxShadow: "2px 2px 10px black",
@@ -12,7 +12,7 @@ const Button = props => {
             border: "none",
             margin: props.margin ? props.margin : 0,
             opacity: props.disabled ? 0.5 : 1
-        }} disabled={props.disabled}>
+        }} disabled={props.disabled} form={props.form} type={props.type}>
             {props.text}
         </button>
     );
