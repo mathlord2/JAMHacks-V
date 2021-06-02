@@ -213,7 +213,7 @@ function App() {
   
         axios.get("http://localhost:5000/ads", config)
         .then(r => {
-          // console.log(r);
+          console.log(r.data);
           setMyAds(r.data);
         });
       });
